@@ -4,6 +4,8 @@ const cors = require("cors");
 const mongoose = require("./config/db"); // Import DB connection
 const blogRoutes = require("./routes/blogRoutes"); // Import blog routes
 const userRoutes = require("./routes/userRoutes"); // Import user routes
+const { registerUser } = require("./controllers/userController");
+const router = require("./routes/userRoutes");
 
 const app = express();
 
@@ -21,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

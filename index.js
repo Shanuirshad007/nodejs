@@ -1,29 +1,19 @@
-require("dotenv").config(); // Load environment variables
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("./config/db"); // Import DB connection
-const blogRoutes = require("./routes/blogRoutes"); // Import blog routes
-const userRoutes = require("./routes/userRoutes"); // Import user routes
-const { registerUser } = require("./controllers/userController");
-const router = require("./routes/userRoutes");
-
+const express = require('express');
 const app = express();
+const connectDB = require('./config/db');
+const blogRoutes = require('./routes/blogRoutes');
+const userRoutes = require('./routes/userRoutes');
 
-// Middleware
-app.use(express.json()); // Parse JSON bodies
-app.use(cors()); // Enable CORS
+app.use(express.json());
+
+// Connect database
+connectDB();
 
 // Routes
-app.use("/api/blogs", blogRoutes);
-app.use("/api/users", userRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/posts', blogRoutes);
 
-// Default route
-app.get("/", (req, res) => {
-  res.send("Welcome to the Blog API!");
-});
-
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });

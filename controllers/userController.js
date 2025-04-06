@@ -6,6 +6,7 @@ const generateToken = (user) => {
   return jwt.sign({ id: user._id, role: user.role }, 'your_jwt_secret', { expiresIn: '7d' });
 };
 
+
 // exports.registerUser = async (req, res) => {
 //   try {
 //     const { username, password, role } = req.body;
@@ -72,5 +73,21 @@ exports.loginUser = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateUserInfo = async (req, res) => {
+  try {
+    const { name, avatar } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, avatar },
+      { new: true, runValidators: true }
+    ).select("username email name avatar role");
+
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating user info", error: err.message });
   }
 };

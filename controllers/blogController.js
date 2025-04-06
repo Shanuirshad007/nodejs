@@ -36,8 +36,7 @@ exports.getPostById = async (req, res) => {
 //   };
 exports.createPost = async (req, res) => {
   const { title, content, image } = req.body;
-  console.log(req.body);
-
+  
   try {
     const newPost = await BlogPost.create({
       title,
